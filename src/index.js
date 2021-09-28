@@ -11,17 +11,17 @@ global.console = customConsole
 const { ApolloServer } = require('apollo-server-koa')
 const Koa = require('koa')
 
-// Auth
-// eslint-disable-next-line node/no-extraneous-require
-const cors = require('@koa/cors')
-const bodyParser = require('koa-bodyparser')
+// // Auth
+// // eslint-disable-next-line node/no-extraneous-require
+// const cors = require('@koa/cors')
+// const bodyParser = require('koa-bodyparser')
 
 const { dbInstanceFactory } = require('./db')
 const {
   contextDbInstance,
-  jwtTokenValidation,
-  jwtTokenUserIdentification,
-  correlationMiddleware,
+  // jwtTokenValidation,
+  // jwtTokenUserIdentification,
+  // correlationMiddleware,
   errorHandlingMiddleware
 } = require('./middleware')
 const { schema, getDataSources, getDataLoaders } = require('./startup/index')
@@ -29,11 +29,11 @@ const { schema, getDataSources, getDataLoaders } = require('./startup/index')
 const app = new Koa()
 
 app.use(errorHandlingMiddleware())
-app.use(bodyParser())
-app.use(correlationMiddleware())
-app.use(cors())
-app.use(jwtTokenValidation)
-app.use(jwtTokenUserIdentification)
+// app.use(bodyParser())
+// app.use(correlationMiddleware())
+// app.use(cors())
+// app.use(jwtTokenValidation)
+// app.use(jwtTokenUserIdentification)
 app.use(contextDbInstance())
 
 const server = new ApolloServer({
