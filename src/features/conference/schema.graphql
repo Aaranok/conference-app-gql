@@ -1,0 +1,70 @@
+type Conference {
+  id: ID!
+  name: String!
+  startDate: DateTime!
+  endDate: DateTime!
+  type: Type
+  category: Category
+  location: Location!
+  speakers: [Speaker!]!
+  status(userEmail: String!): Status
+}
+# type Type {
+#   id: Int!
+#   name: String!
+#   code: String
+# }
+# type Category {
+#   id: Int!
+#   name: String!
+#   code: String
+# }
+# type Country {
+#   id: Int!
+#   name: String!
+#   code: String
+# }
+# type County {
+#   id: Int!
+#   name: String!
+#   code: String
+# }
+# type City {
+#   id: Int!
+#   name: String!
+#   code: String
+# }
+# type Status {
+#     id: ID!
+#     name: String!
+# }
+
+type Location {
+  id: ID!
+  name: String
+  address: String
+
+  city: City!
+  county: County!
+  country: Country!
+}
+type Speaker {
+  id: ID!
+  name: String
+  isMainSpeaker: Boolean
+  nationality: String
+  rating: Float
+}
+type ConferenceList {
+  values: [Conference!]!
+  pagination(pager: PagerInput!, filters: ConferenceFilterInput): Pagination
+}
+
+input ConferenceFilterInput {
+  startDate: DateTime
+  endDate: DateTime
+}
+
+extend type Query {
+  conferenceList(pager: PagerInput!, filters: ConferenceFilterInput): ConferenceList
+}
