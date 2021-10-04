@@ -1,10 +1,18 @@
+const state = require('../../utils/constants')
+const { randomCharacters } = require('../../utils/functions.js')
+
 const conferenceResolvers = {
   Query: {
     conferenceList: async (_parent, { pager, filters }, { dataSources }, _info) => {
       const data = await dataSources.conferenceDb.getConferenceList(pager, filters)
       return data
+    },
+    conference: async (_parent, { id }, { dataSources }, _info) => {
+      const data = await dataSources.conferenceDb.getConferenceById(id)
+      return data
     }
   },
+
   ConferenceList: {
     pagination: async (_parent, { pager, filters }, { dataSources }, _info) => {
       const { totalCount } = await dataSources.conferenceDb.getConferenceListTotalCount(filters)
@@ -45,6 +53,15 @@ const conferenceResolvers = {
     country: async ({ countryId }, _params, { dataLoaders }) => {
       const country = await dataLoaders.countryById.load(countryId)
       return country
+    }
+  },
+  Mutation: {
+    attend: async (_parent, { input }, { dataSources }, _info) => {
+      const updateInput = { ...input, statusId: state.Attended }
+      const statusId = await dataSources.conferenceDb.updateConferenceXAttendee(updateInput)
+
+      const qrCode = randomCharacters(10)
+      return statusId ? qrCode : null
     }
   }
 }

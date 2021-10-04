@@ -33,3 +33,11 @@ type City {
   name: String!
   code: String
 }
+
+extend type Query {
+  categoryList: [Category!]!
+  typeList: [Type!]!
+  countryList: [Country!]!
+  countyList: [County!]!
+  cityList: [City!]!
+}
