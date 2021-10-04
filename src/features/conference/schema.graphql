@@ -48,6 +48,12 @@ input Attendee {
   conferenceId: ID!
 }
 
+type AttendConference {
+  code: String
+  suggestedConferences: [Conference!]
+}
+
 extend type Mutation {
-  attend(input: Attendee): String
+  attend(input: Attendee): AttendConference
+  withdraw(input: Attendee!): Int
 }
