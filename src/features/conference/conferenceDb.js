@@ -53,9 +53,9 @@ class ConferenceDB extends SQLDataSource {
       Address: location.address,
       Latitude: location.latitude,
       Longitude: location.longitude,
-      CityId: location.cityId,
-      CountyId: location.countyId,
-      CountryId: location.countyId
+      CityId: parseInt(location.cityId),
+      CountyId: parseInt(location.countyId),
+      CountryId: parseInt(location.countyId)
     }
     const output = ['Id', 'Name', 'Address', 'Latitude', 'Longitude', 'CityId', 'CountyId', 'CountryId']
 
@@ -116,7 +116,7 @@ class ConferenceDB extends SQLDataSource {
       .first()
 
     let result
-    if (current.id) {
+    if (current?.id) {
       result = await this.knex('ConferenceXSpeaker')
         .update({ IsMainSpeaker: Boolean(isMainSpeaker) }, 'IsMainSpeaker')
         .where('Id', current.id)

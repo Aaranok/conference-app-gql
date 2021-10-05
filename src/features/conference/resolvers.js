@@ -70,7 +70,7 @@ const conferenceResolvers = {
     },
     saveConference: async (_parent, { input }, { dataSources }, _info) => {
       const location = await dataSources.conferenceDb.updateLocation(input.location)
-      const updateConference = await dataSources.conferenceDb.updateConference(input)
+      const updateConference = await dataSources.conferenceDb.updateConference({ ...input, location })
       const speaker = await Promise.all(
         input.speakers.map(async speaker => {
           const updatedSpeaker = await dataSources.conferenceDb.updateSpeaker(speaker)
