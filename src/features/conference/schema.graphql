@@ -100,4 +100,5 @@ extend type Mutation {
   attend(input: Attendee): AttendConference
   withdraw(input: Attendee!): Int
   saveConference(input: ConferenceInput): Conference
+  joinConference(input: Attendee): Int
 }
